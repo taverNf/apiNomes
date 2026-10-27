@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analisador Estatístico de Nomes</title>
+  <meta name="description" content="Registre nomes e veja estimativas de idade média e gênero.">
+
+  <!-- Alteração: aplica o tema salvo antes da página renderizar, evitando o "flash" de cor -->
+  <script>
+    (function () {
+      try {
+        const salvo = localStorage.getItem("tema");
+        const preferido = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = salvo || preferido;
+      } catch (e) {
+        // Se o localStorage estiver bloqueado, usa o tema padrão
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="topbar-inner">
+      <div class="marca">
+        <span class="marca-icone">N</span>
+        Analisador de Nomes
+      </div>
+      <div class="acoes-topbar">
+        <div class="contador">
+          Registros <strong id="contador">0</strong>
+        </div>
+
+        <!-- Alteração: botão de alternância entre tema claro e escuro -->
+        <button type="button" id="btn-tema" class="btn-tema" aria-label="Alternar tema claro e escuro">
+          <span class="icone-sol">☀</span>
+          <span class="icone-lua">☾</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <p class="eyebrow">Ferramenta de estatística</p>
+    <h1>Analisador Estatístico de Nomes</h1>
+    <p class="lead">Registre nomes e veja estimativas de idade média e gênero, com base em dados públicos.</p>
+  </header>
+
+  <main class="layout">
+
+    <div class="coluna">
+
+      <section class="bloco">
+        <div class="bloco-cabecalho">
+          <span class="numero">01</span>
+          <h2 id="form-titulo">Cadastrar nome</h2>
+        </div>
+
+        <form id="form-nome">
+          <label for="input-nome" class="campo-rotulo">Nome</label>
+          <div class="campo-linha">
+            <input type="text" id="input-nome" placeholder="Ex.: Maria" required autocomplete="off">
+            <button type="submit" id="btn-salvar" class="btn btn-primario">Pesquisar e salvar</button>
+          </div>
+          <button type="button" id="btn-cancelar" class="btn btn-link hidden">Cancelar edição</button>
+        </form>
+
+        <p id="mensagem" class="mensagem" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-cabecalho">
+          <span class="numero">02</span>
+          <h2>Nome atual</h2>
+        </div>
+        <div id="dados-atuais">
+          <p class="vazio">Nenhum nome pesquisado ainda.</p>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="coluna">
+      <section class="bloco">
+        <div class="bloco-cabecalho">
+          <span class="numero">03</span>
+          <h2>Histórico</h2>
+        </div>
+        <ul id="lista" class="lista"></ul>
+        <p id="vazio" class="vazio">Nenhum nome cadastrado ainda.</p>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape-inner">
+      <span>Dados de idade e gênero: Agify.io e Genderize.io</span>
+      <span>Armazenamento: Firebase Firestore</span>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
